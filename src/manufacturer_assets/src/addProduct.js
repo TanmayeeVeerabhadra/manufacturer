@@ -1,8 +1,6 @@
 // import { HttpAgent } from '@dfinity/agent';
 import { manufacturer } from "../../declarations/manufacturer";
 
-
-
 document.querySelector('form[name="adp"]').addEventListener('submit', async (event) => {
     event.preventDefault()
     const button = event.target.querySelector("button");

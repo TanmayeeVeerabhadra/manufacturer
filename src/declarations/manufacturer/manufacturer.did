@@ -1,0 +1,32 @@
+type SellerToConsumerRecord = 
+ record {
+   consumerId: text;
+   manuId: text;
+   productId: text;
+   productName: text;
+   sellerId: text;
+   sellerName: text;
+ };
+type SellerRecord = 
+ record {
+   manuId: text;
+   sellerId: text;
+   sellerName: text;
+ };
+type AuditRecord = 
+ record {
+   manuId: text;
+   productId: text;
+   productName: text;
+ };
+service : {
+  AddProduct: (AuditRecord) -> (text);
+  AddSeller: (SellerRecord) -> (text);
+  ProductHistory: (text) -> (text);
+  ProductVerification: (text, text) -> (text);
+  SellProductToConsumer: (text, text, text) -> (text);
+  SellProductToSeller: (text, text) -> (text);
+  genereteQrcode: (text) -> (text);
+  getCompSoldRecords: () -> (vec SellerToConsumerRecord) query;
+  getSellers: (text) -> (text);
+}

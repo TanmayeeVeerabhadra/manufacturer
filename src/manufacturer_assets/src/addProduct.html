@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Fake Product Identification</title>
+		<link rel="icon" type="image/x-icon" href="/src/manufacturer_assets/assets/favicon.ico">
+		<a href="/src/manufacturer_assets/src/index.html" >Home</a>
+		<script type="module" src="/src/manufacturer_assets/src/addProduct.js"></script>
+	</head>
+	<body>
+			<h3>
+				Add Product
+			</h3>
+			<form name="adp">
+				<label for="pid">Product Id:</label>
+				<input type="text" id="pid">
+				<label for="pname">Product Name:</label>
+				<input type="text" id="pname">
+				<label for="mid">Manufacture Id:</label>
+				<input type="text" id="mid">
+				<button type="submit" onclick="fetchQR(event)">Download Qr</button> 
+				<input type="reset" value="Reset"/>
+			</form>
+			<section id="added"></section>
+			<div class="qr-code">
+				<div >
+					<img  hidden id="imgQR" src="" alt="qr-code" >
+				</div>
+				<br></br>
+				<div >
+					<button hidden type="submit"  id="download" onclick="saveImage()">Download QR Code</button>
+				</div>
+			</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+		<script>
+			var src;
+			var qrValue;
+			function fetchQR(event){
+				event.preventDefault();
+				qrValue = document.getElementById('pid').value;
+				qrImage = document.querySelector(".qr-code");
+				qrImageResult = qrImage.querySelector("img");
+				src = qrImageResult.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;
+				
+
+				downloadQrImg = document.getElementById('imgQR');
+				downloadQrBtn = document.getElementById('download');
+				downloadQrImg.removeAttribute('hidden');
+				downloadQrBtn.removeAttribute('hidden');
+
+			}
+			function saveImage() {
+				fetch(src)
+					.then(response => response.blob())
+					.then(blob => {
+						const url = URL.createObjectURL(blob);
+						const a = document.createElement('a');
+						a.href = url;
+						a.download = qrValue + '.png';
+						a.click();
+					});
+			}
+		</script>
+    </body>
+
+</html>
